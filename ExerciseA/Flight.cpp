@@ -4,7 +4,7 @@
 //
 //  Created by Mahmood Moussavi on 2024-05-25.
 //
-#include "Point2.h"
+#include "Point.h"
 #include "Flight.h"
 Flight::Flight(const string &flightNumber, const Point &origin, const Point &destination,
        const string &departureDate, const string &departureTime, int craftCapacity)

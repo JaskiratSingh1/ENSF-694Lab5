@@ -33,7 +33,7 @@ void read_flight_info (int argc, char** argv, vector<Flight>& records){
         cerr << "Usage: hashtable input.txt" << endl;
         exit(1);
     }
-    string fileName = "/Users/mahmoodmoussavi/Dropbox/Data Structue Code/Flight Hash Table Using Linked List/Flight Hash Table Using Linked List/";
+    string fileName = "/Users/aether/Documents/ENSF-694/ENSF-694Lab5/ExerciseA/";
     fileName+= string(argv[1]);
     ifstream inputFile;
     inputFile.open(fileName.c_str());
