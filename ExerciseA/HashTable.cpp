@@ -1,9 +1,9 @@
-//
-//  HashTable.cpp
-//  ExerciseA
-//
-//  Created by Jaskirat Singh on 7/29/24.
-//
+/*
+ *  HashTable.cpp
+ *  ENSF 694 Lab 5, exercise A
+ *  Completed by: Jaskirat Singh
+ *  Submission date: August 2
+ */
 
 #include "HashTable.h"
 
@@ -18,8 +18,8 @@ unsigned int HashTable::hashFunction(const string &flightNumber) const {
     unsigned int hash = 0;
     //Iterate through all characters
     for(char c : flightNumber) {
-        //h(k) = ((a * k + b) % p) % m
-        hash = ((hash * 31 + c) % 1117) % tableSize;
+        //h(k) = ((a * k + b) % p) % m from notes
+        hash = ((hash * 31 + c) % 17) % tableSize;
     }
     return hash;
 }
@@ -62,10 +62,21 @@ double HashTable::calculatePackingDensity() const {
     return numberOfRecords / tableSize;
 }
 
-// Calculate hash efficiency
+//Calculate hash efficiency
 double HashTable::calculateHashEfficiency() const {
+    unsigned int reads = 0;
+
+    //Go over each bucket
+    for(unsigned int i = 0; i < tableSize; i++) {
+        //Get number of nodes in current bucket
+        reads += table[i].numNodes();
+    }
+
+    //Calculate the average reads
+    double averageReads = reads/numberOfRecords + 1;
     
-    return calculatePackingDensity();// /avg reads per record
+    //Hashing efficiency = packing density / average number of reads per record
+    return calculatePackingDensity() / averageReads;
 }
 
 //Display the hash table

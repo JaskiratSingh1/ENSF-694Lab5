@@ -55,3 +55,15 @@ void List::display() const {
         current = current->next;
     }
 }
+
+int List::numNodes() const {
+    int count = 0;
+    Node* current = head;
+    
+    //Loop while counting number of nodes
+    while (current){
+        count++;
+        current = current->next;
+    }
+    return count;
+}

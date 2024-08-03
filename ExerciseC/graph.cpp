@@ -1,3 +1,10 @@
+/*
+ *  grah.cpp
+ *  ENSF 694 Lab 5, exercise C
+ *  Completed by: Jaskirat Singh
+ *  Submission date: August 2
+ */
+
 #include "graph.h"
 
 PriorityQueue::PriorityQueue() : front(nullptr) {}
@@ -86,11 +93,61 @@ void Graph::clearAll() {
 }
 
 void Graph::dijkstra(const char start) {
-// STUDENTS MUST COMPLETE THE DEFINITION OF THIS FUNCTION
+    //Clear any previous values
+    clearAll();
+    //Step 1: initialization
+    PriorityQueue pq;
+    Vertex* startVertex = getVertex(start);
+    //Set distance to 0
+    startVertex->dist = 0;
+    pq.enqueue(startVertex);
+
+    //Step 2: main loop
+    while (!pq.isEmpty()){
+        Vertex* v = pq.dequeue();
+
+        //Consider neighbours
+        for(Edge* e = v->adj; e != nullptr; e = e->next){
+            Vertex* w = e->des;
+            double newDist = v->dist + e->cost;
+
+            if(newDist < w->dist){
+                w->dist = newDist;
+                w->prev = v;
+                pq.enqueue(w);
+            }
+        }
+    }
 }
 
 void Graph::unweighted(const char start) {
-// STUDENTS MUST COMPLETE THE DEFINITION OF THIS FUNCTION
+    //Clear any previous values
+    clearAll();
+    queue<Vertex*> q;
+
+    //Visit start vertex and label it 0
+    Vertex* startVertex = getVertex(start);
+    //Initialize dist of 0
+    startVertex->dist = 0;
+    q.push(startVertex);
+
+    while (!q.empty()) {
+        Vertex* v = q.front();
+        //Remove vertex V
+        q.pop();
+
+        //Consider neighbours
+        for(Edge* e = v->adj; e != nullptr; e = e->next){
+            Vertex* w = e->des;
+
+            //Check if visited before
+            if(w->dist == INFINITY) {
+                w->dist = v->dist + 1;
+                w->prev = v;
+                q.push(w);
+            }
+        }
+    }
 }
 
 void Graph::readFromFile(const string& filename) {
@@ -99,7 +156,7 @@ void Graph::readFromFile(const string& filename) {
         cerr << "Could not open file: " << filename << endl;
         exit(1);
     }
-
+    
     char sn, dn;
     double cost;
     while (infile >> sn >> dn >> cost) {

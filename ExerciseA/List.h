@@ -22,6 +22,9 @@ public:
     bool isEmpty() const;
     bool contains(const string &flightNumber) const;
     void display() const;
+    
+    //Number of nodes
+    int numNodes() const;
 };
 
 

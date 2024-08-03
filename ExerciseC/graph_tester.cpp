@@ -6,7 +6,7 @@ int main(int argc, char** argv) {
     }
     
     Graph g;
-    g.readFromFile(argv[0]);
+    g.readFromFile(argv[1]);
     int choice = 0;
     while(choice != 3) {
 

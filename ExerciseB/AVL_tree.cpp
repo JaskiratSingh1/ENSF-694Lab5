@@ -1,9 +1,9 @@
-//
-//  AVL tree.cpp
-//  AVL tree
-//
-//  Created by Mahmood Moussavi on 2024-05-22.
-//
+/*
+ *  AVL_tree.cpp
+ *  ENSF 694 Lab 5, exercise B
+ *  Completed by: Jaskirat Singh
+ *  Submission date: August 2
+ */
 
 #include "AVL_tree.h"
 
@@ -19,6 +19,8 @@ int AVLTree::getBalance(Node* N) {
     //If N is nullptr then return height = 0
     if(N == nullptr) return 0;
     //Balance = left height - right height
+    //Notes say right-left but online theory says left-right
+    //Assignment results work better with left-right
     return height(N->left) - height(N->right);
 }
 
@@ -60,10 +62,10 @@ void AVLTree::insert(int key, Type value) {
  Node* AVLTree::insert(Node* node, int key, Type value, Node* parent) {
      if (node == nullptr) {return new Node(key, value, parent);} // Node(left, right, parent) format
          
-     //Call insert function with left or right node depending on key value
+     //Call insert function with node depending on key
      if (key < node->data.key) {node->left = insert(node->left, key, value, node);}
      else if (key > node->data.key) {node->right = insert(node->right, key, value, node);}
-     else {return node;} // No duplicate keys
+     else {return node;} //No duplicate keys
      
      //Update height to the larger value
      node->height = 1 + max(height(node->left), height(node->right));
@@ -71,11 +73,12 @@ void AVLTree::insert(int key, Type value) {
      //Balance tree
      int balance = getBalance(node);
      
-     //Balance > 1
+     //4 Cases:
+     //Right rotate
      if (balance > 1 && key < node->left->data.key)
          return rightRotate(node);
 
-     //Balance < -1
+     //Left rotate
      if (balance < -1 && key > node->right->data.key)
          return leftRotate(node);
 
